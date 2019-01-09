@@ -15,8 +15,9 @@ if [[ -z "$WORDPRESS_PASSWORD" ]]; then
 	exit 1
 fi
 
-PLUGIN="bmlt-wordpress-satellite-plugin"
-MAINFILE="bmlt-wordpress-satellite-plugin.php"
+PROJECT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
+PLUGIN_BUILDS_PATH="$PROJECT_ROOT/build-wp"
+VERSION="$TRAVIS_TAG"
 
 mkdir -p $PLUGIN_BUILDS_PATH/$PLUGIN
 
