@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+if [[ "$TRAVIS_TAG" =~ "/^beta/" ]]; then
+	echo "Tag contains beta, aborting deployment" 1>&2
+	exit 1
+fi
+
 if [[ -z "$TRAVIS" ]]; then
 	echo "Script is only to be run by Travis CI" 1>&2
 	exit 1
@@ -12,9 +17,6 @@ fi
 
 PLUGIN="bmlt-wordpress-satellite-plugin"
 MAINFILE="bmlt-wordpress-satellite-plugin.php"
-PROJECT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
-PLUGIN_BUILDS_PATH="$PROJECT_ROOT/build-wp"
-VERSION="$TRAVIS_TAG"
 
 mkdir -p $PLUGIN_BUILDS_PATH/$PLUGIN
 
