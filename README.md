@@ -9,3 +9,4 @@ For ex.
 
 PLUGIN="bmlt-wordpress-satellite-plugin"
 MAINFILE="bmlt-wordpress-satellite-plugin.php"
+__
