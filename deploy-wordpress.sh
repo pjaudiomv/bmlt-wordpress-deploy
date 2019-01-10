@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ "$TRAVIS_TAG" == *beta* ]]; then
+if [[ "$TRAVIS_TAG" == *"beta"* ]]; then
 	echo "Tag contains beta, aborting deployment" 1>&2
 	exit 1
 fi
