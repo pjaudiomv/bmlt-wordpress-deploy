@@ -1,18 +1,18 @@
 #!/bin/bash
 
 if [[ "$TRAVIS_TAG" == *"beta"* ]]; then
-	echo "Tag contains beta, aborting deployment" 1>&2
-	exit 1
+    echo "Tag contains beta, aborting deployment" 1>&2
+    exit 1
 fi
 
 if [[ -z "$TRAVIS" ]]; then
-	echo "Script is only to be run by Travis CI" 1>&2
-	exit 1
+    echo "Script is only to be run by Travis CI" 1>&2
+    exit 1
 fi
 
 if [[ -z "$WORDPRESS_PASSWORD" ]]; then
-	echo "WordPress.org password not set" 1>&2
-	exit 1
+    echo "WordPress.org password not set" 1>&2
+    exit 1
 fi
 
 PROJECT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
@@ -55,12 +55,15 @@ READMEVERSION=$(grep -i "Stable tag:" $PLUGIN/readme.txt | awk -F' ' '{print $NF
 echo "readme.txt version: $READMEVERSION"
 
 if [ "$READMEVERSION" = "trunk" ]; then
-	echo "Version in readme.txt & $MAINFILE don't match, but Stable tag is trunk. Let's continue..."
+    echo "Version in readme.txt & $MAINFILE don't match, but Stable tag is trunk. Let's continue..."
 elif [ "$PLUGINVERSION" != "$READMEVERSION" ]; then
-	echo "Version in readme.txt & $MAINFILE don't match. Exiting...."
-	exit 1;
+    echo "Version in readme.txt & $MAINFILE don't match. Exiting...."
+    exit 1;
+elif [ "$PLUGINVERSION" = "" ] || [ "$READMEVERSION" = "" ]; then
+    echo "Version in readme.txt or $MAINFILE is empty. Exiting...."
+    exit 1;
 elif [ "$PLUGINVERSION" = "$READMEVERSION" ]; then
-	echo "Versions match in readme.txt and $MAINFILE. Let's continue..."
+    echo "Versions match in readme.txt and $MAINFILE. Let's continue..."
 fi
 
 # Checkout the SVN repo
