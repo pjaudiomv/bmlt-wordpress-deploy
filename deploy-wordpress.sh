@@ -116,7 +116,7 @@ svn stat svn
 
 # this is so we can test a deploy without the final svn commit, if theres a hyphen in tag but doesn't contain beta in it we will get here.
 if [[ "$TRAVIS_TAG" == *"-"* ]]; then
-    echo "Tag contains beta, aborting deployment" 1>&2
+    echo "Tag contains hyphen, aborting deployment" 1>&2
     exit 1
 fi
 
