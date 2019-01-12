@@ -1,15 +1,18 @@
 #!/bin/bash
 
-if [[ "$TRAVIS_TAG" == *"beta"* ]]; then
-    echo "Tag contains beta, aborting deployment" 1>&2
-    exit 1
-fi
-
+# if travis isnt calling the script we abort
 if [[ -z "$TRAVIS" ]]; then
     echo "Script is only to be run by Travis CI" 1>&2
     exit 1
 fi
 
+# if tag contains beta we abort
+if [[ "$TRAVIS_TAG" == *"beta"* ]]; then
+    echo "Tag contains beta, aborting deployment" 1>&2
+    exit 1
+fi
+
+# if wordpress password isnt set we abort
 if [[ -z "$WORDPRESS_PASSWORD" ]]; then
     echo "WordPress.org password not set" 1>&2
     exit 1
@@ -110,6 +113,12 @@ svn stat svn | grep '^?' | awk '{print $2}' | xargs -I x svn add x@
 # Remove deleted files from SVN
 svn stat svn | grep '^!' | awk '{print $2}' | xargs -I x svn rm --force x@
 svn stat svn
+
+# this is so we can test a deploy without the final svn commit, if theres a hyphen in tag but doesn't contain beta in it we will get here.
+if [[ "$TRAVIS_TAG" == *"-"* ]]; then
+    echo "Tag contains beta, aborting deployment" 1>&2
+    exit 1
+fi
 
 # Commit to SVN
 svn ci --no-auth-cache --username $WORDPRESS_USERNAME --password $WORDPRESS_PASSWORD svn -m "Deploy version $VERSION"
