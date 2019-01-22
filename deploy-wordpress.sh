@@ -9,7 +9,7 @@ fi
 # if tag contains beta we abort
 if [[ "$TRAVIS_TAG" == *"beta"* ]]; then
     echo "Tag contains beta, aborting deployment" 1>&2
-    exit 1
+    exit 0
 fi
 
 # if wordpress password isnt set we abort
@@ -117,7 +117,7 @@ svn stat svn
 # this is so we can test a deploy without the final svn commit, if theres a hyphen in tag but doesn't contain beta in it we will get here.
 if [[ "$TRAVIS_TAG" == *"-"* ]]; then
     echo "Tag contains hyphen, aborting deployment" 1>&2
-    exit 1
+    exit 0
 fi
 
 # Commit to SVN
