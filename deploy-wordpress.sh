@@ -70,7 +70,7 @@ elif [ "$PLUGINVERSION" = "$READMEVERSION" ]; then
 fi
 
 # Checkout the SVN repo
-svn co -q "http://svn.wp-plugins.org/$PLUGIN" svn
+svn co -q "http://svn.wp-plugins.org/$PLUGIN" svn --depth immediates
 
 # Move out the trunk directory to a temp location
 mv svn/trunk ./svn-trunk
